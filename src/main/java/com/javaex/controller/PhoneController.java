@@ -2,6 +2,7 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +20,9 @@ public class PhoneController {
 		
 	
 		//필드
+		//@오토와이어드 자동연결 (dao)
+		@Autowired
+		private PhoneDao phoneDao;
 		//생성자	
 		//메소드 gs
 		//메소드 일반
@@ -29,16 +33,19 @@ public class PhoneController {
 	public String list(Model model) {
 		System.out.println("[phoneController.list]");
 		
+		
 		//Dao 사용
-		PhoneDao phoneDao = new PhoneDao();
+		//PhoneDao phoneDao = new PhoneDao();
 		
 		//Dao의 메소드 사용
 		List<PersonVo> personList = phoneDao.getPersonList();
 		
-		System.out.println(personList);
+		
 		
 		//model담기 (택배박스에 담기) -->ds전달된다 -->request의 attribute영엑에 넣는다.
 		model.addAttribute("personList" ,personList);
+		
+		//views
 		return "/WEB-INF/views/list.jsp";
 	}
 	
@@ -48,8 +55,8 @@ public class PhoneController {
 		System.out.println("delete들어옴");
 		
 		
-		PhoneDao phoneDao = new PhoneDao();
-		phoneDao.personDelete(id);
+		//PhoneDao phoneDao = new PhoneDao();
+		//phoneDao.personDelete(id);
 		
 		
 		
@@ -71,11 +78,11 @@ public class PhoneController {
 	public String updateForm(Model model, @RequestParam("no") int id) {
 		System.out.println("updateForm");
 		
-		PhoneDao phoneDao = new PhoneDao();
-		PersonVo personVo = phoneDao.getPerson(id);
+		//PhoneDao phoneDao = new PhoneDao();
+		//PersonVo personVo = phoneDao.getPerson(id);
 	
 		
-		model.addAttribute("personVo",personVo);
+		//model.addAttribute("personVo",personVo);
 		
 		return "/WEB-INF/views/updateForm.jsp";
 		
@@ -91,8 +98,8 @@ public class PhoneController {
 		
 		System.out.println(personVo);
 		
-		PhoneDao phoneDao = new PhoneDao();
-		phoneDao.personUpdate(personVo);
+		//PhoneDao phoneDao = new PhoneDao();
+		//phoneDao.personUpdate(personVo);
 		
 		
 		return "redirect:/list";
@@ -123,7 +130,7 @@ public class PhoneController {
 			
 			
 			//Dao 의 personInser() 이용해서 데이터 저장
-			PhoneDao phoneDao = new PhoneDao();
+			//PhoneDao phoneDao = new PhoneDao();
 			phoneDao.personInsert(personVo);
 			
 			
@@ -132,52 +139,7 @@ public class PhoneController {
 			
 		}
 		
-	/* 파라미터 1개씩 받을때
-	//쓰기
-	@RequestMapping(value="/write", method = {RequestMethod.GET,RequestMethod.POST})
-	public String write(@RequestParam("name") String name,
-			@RequestParam("hp")String hp,@RequestParam("company") String company) {
-		
-		System.out.println("[phoneController.wirte]");
-		
-		
-		PersonVo personVo = new PersonVo(name,hp,company);
-		System.out.println(personVo);
-		
-		return "";
-		
-	}
 	
-	//쓰기
-	//파라미터가 있을때도 있고 없을때도 있을떄
-		@RequestMapping(value="/write", method = {RequestMethod.GET,RequestMethod.POST})
-		public String write(@RequestParam("name") String name,
-				@RequestParam("hp")String hp,
-				@RequestParam(value="company",required=false,defaultValue="-1") String company) {
-			
-			System.out.println("[phoneController.wirte]");
-			
-			
-			PersonVo personVo = new PersonVo(name,hp,company);
-			System.out.println(personVo);
-			
-			return "";
-	
-		}
-	*/   // pathvariable test
-		@RequestMapping(value="/board/read/{no}",method= {RequestMethod.GET,RequestMethod.POST})
-		public String read(@PathVariable("no")int boardNo) {
-			
-			System.out.println("pathVariable read");
-			
-			//**********ex*******************
-			//localhost:8088/phonebook3/board/read/1
-			//localhost:8088/phonebook3/board/read/2
-			//localhost:8088/phonebook3/board/read/3
-			
-			System.out.println(boardNo);
-			return "";
-		}
 		
 	
 		@RequestMapping(value="/test")

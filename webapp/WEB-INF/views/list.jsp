@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<h1>전화번호 리스트</h1>
+	<h1>전화번호 리스트${pageContext.request.contextPath }</h1>
 	<p>입력한 정보 내역입니다.</p>
 	
 	
@@ -32,15 +32,15 @@
 				<td>${personVo.company }</td>
 			</tr>
 			<tr>
-			<td><a href="/phonebook3/updateForm?no=${personVo.personId }">[수정폼]</a></td>
-			<td><a href="/phonebook3/delete?no=${personVo.personId }">[삭제]</a> </td>
+			<td><a href="${pageContext.request.contextPath }/updateForm?no=${personVo.personId }">[수정폼]</a></td>
+			<td><a href="${pageContext.request.contextPath }/delete?no=${personVo.personId }">[삭제]</a> </td>
 			
 			</tr>
 		</table>
 		<br>
 		</c:forEach>
 		
-			<a href="/phonebook3/writeForm">[추가등록]</a>
+			<a href="${pageContext.request.contextPath }/writeForm">[추가등록]</a>
 			
 			
 			
