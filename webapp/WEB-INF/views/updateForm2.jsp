@@ -16,11 +16,11 @@
 		아래 항목을 기입하고 "수정" 버튼을 누르려무나
 	</p>
 	
-	<form action="${pageContext.request.contextPath }/update" method="get">
-		이름(name): <input type="text" name="name" value="${personVo.name }"> <br>
-		핸드폰(hp): <input type="text" name="hp" value="${personVo.hp }"> <br>
-		회사(company): <input type="text" name="company" value="${personVo.company }"> <br>
-		<input type="text" name="personId" value="${personVo.personId }">
+	<form action="${pageContext.request.contextPath }/update2" method="get">
+		이름(name): <input type="text" name="name" value="${requestScope.pMap.NAME }"> <br>
+		핸드폰(hp): <input type="text" name="hp" value="${requestScope.pMap.HP }"> <br>
+		회사(company): <input type="text" name="company" value="${requestScope.pMap.COMPANY }"> <br>
+		<input type="text" name="personId" value="${pMap.PERSON_ID }">
 	
 		<button type="submit">수정</button>
 	</form>

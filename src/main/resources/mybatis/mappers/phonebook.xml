@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="phonebook">
+	<resultMap id="resultMapPersonVo" type="com.javaex.vo.PersonVo">
+	
+		<result column="person_id" property="personId"></result>
+	
+	
+	
+	
+	</resultMap>
+
+
+
+
+
 	<!-- 전체리스트가져오는 쿼리문 -->
 	<select id="selectList" resultType="com.javaex.vo.PersonVo">
 	<![CDATA[
@@ -30,6 +43,83 @@
 	
 	
 	</insert>
+	
+	<!-- 전화번호 저장 map 사용 -->
+	<insert id="personInsert2" parameterType="map">
+	<![CDATA[
+		insert into person
+		values (
+	        SEQ_PERSON_ID.nextval,
+	        #{name},
+	        #{hp},
+	        #{company}
+  		)
+	
+	]]>
+	
+	
+	
+	
+	</insert>
+	
+	<!-- 전화번호 삭제 -->
+	<delete id="personDelete" parameterType="int">
+	<![CDATA[
+	
+		delete from person
+		where person_id = #{personId}
+	
+	
+	]]>
+	
+	
+	</delete>
+	
+	<!-- 전화 번호 1명가져오기 -->
+	
+	<select id="selectPerson" parameterType="int" resultMap="resultMapPersonVo">
+	
+	<![CDATA[
+	select person_id,
+	       name,
+	       hp,
+	       company
+	from person
+	where person_id = #{personId}
+	
+	]]>
+	
+	
+	
+	</select>
+	
+	
+	<!-- 전화번호 1명가져오기 resultType 이 map 사용 -->
+	<select id="selectPerson2" parameterType="int" resultType="map">
+		<![CDATA[
+			select person_id,
+			       name,
+			       hp,
+			       company
+			from person
+			where person_id = #{personId}
+	
+	]]>
+	
+	</select>
+	
+	<!-- 업데이트  -->
+	   <!-- 전화번호 수정 -->
+   <update id="updatePerson2" parameterType="com.javaex.vo.PersonVo">  
+      <![CDATA[
+        		 update  person
+         			set name = #{name},
+            		hp = #{hp},
+            		company = #{company}
+         		where person_id = #{personId}
+      ]]>
+   </update>
+	
 	
 	
 </mapper>

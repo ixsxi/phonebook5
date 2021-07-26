@@ -32,7 +32,7 @@
 				<td>${personVo.company }</td>
 			</tr>
 			<tr>
-			<td><a href="${pageContext.request.contextPath }/updateForm?no=${personVo.personId }">[수정폼]</a></td>
+			<td><a href="${pageContext.request.contextPath }/updateForm2?no=${personVo.personId }">[수정폼]</a></td>
 			<td><a href="${pageContext.request.contextPath }/delete?no=${personVo.personId }">[삭제]</a> </td>
 			
 			</tr>

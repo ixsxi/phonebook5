@@ -1,12 +1,12 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +56,7 @@ public class PhoneController {
 		
 		
 		//PhoneDao phoneDao = new PhoneDao();
-		//phoneDao.personDelete(id);
+		phoneDao.personDelete(id);
 		
 		
 		
@@ -72,22 +72,39 @@ public class PhoneController {
 	
 	
 	
-	//수정폼
+	//수정폼, 
 	
 	@RequestMapping(value="/updateForm",method = {RequestMethod.GET,RequestMethod.POST})
-	public String updateForm(Model model, @RequestParam("no") int id) {
+	public String updateForm(Model model, @RequestParam("no") int personId) {
 		System.out.println("updateForm");
+		System.out.println(personId);
 		
-		//PhoneDao phoneDao = new PhoneDao();
-		//PersonVo personVo = phoneDao.getPerson(id);
+		
+		PersonVo personVo = phoneDao.getPerson(personId);
 	
 		
-		//model.addAttribute("personVo",personVo);
+		model.addAttribute("personVo",personVo);
 		
 		return "/WEB-INF/views/updateForm.jsp";
 		
 	}
 	
+	//수정폼 2 
+	@RequestMapping(value="/updateForm2",method = {RequestMethod.GET,RequestMethod.POST})
+	public String updateForm2(Model model,@RequestParam("no")int personId) {
+		
+		System.out.println("[phoneController.updateForm2]");
+		System.out.println(personId);
+		
+		Map<String,Object> personMap = phoneDao.getPerson2(personId);
+		
+		System.out.println(personMap);
+		
+		model.addAttribute("pMap",personMap);
+		return "/WEB-INF/views/updateForm2.jsp";
+		
+		
+	}
 	
 	//수정
 	
@@ -100,6 +117,28 @@ public class PhoneController {
 		
 		//PhoneDao phoneDao = new PhoneDao();
 		//phoneDao.personUpdate(personVo);
+		
+		
+		return "redirect:/list";
+	
+	}
+	
+	//수정2
+	@RequestMapping(value="/update2",method = {RequestMethod.GET,RequestMethod.POST})
+	public String update2(@RequestParam("personId")int id,
+						  @RequestParam("name") String name,
+						  @RequestParam("hp") String hp,
+						  @RequestParam("company")String company) {
+		System.out.println("update2로들어옴");
+		
+		
+		System.out.println(id);
+		System.out.println(name);
+		System.out.println(hp);
+		System.out.println(company);
+		
+		//PhoneDao phoneDao = new PhoneDao();
+		int count = phoneDao.personUpdate2(id,name,hp,company);
 		
 		
 		return "redirect:/list";
@@ -139,7 +178,24 @@ public class PhoneController {
 			
 		}
 		
-	
+		//쓰기2 파라미터로 받을때
+		//파라미터로 받을때
+		@RequestMapping(value="/write2", method= {RequestMethod.GET,RequestMethod.POST})
+		public String write2(@RequestParam("name")String name,
+							 @RequestParam("hp")String hp,
+							 @RequestParam("company")String company) {
+			
+			System.out.println("pohoneController.write2");
+			
+			System.out.println(name);
+			System.out.println(hp);
+			System.out.println(company);
+			
+			int count = phoneDao.personInsert2(name,hp,company);
+			
+			return"redirect:/list";
+			
+		}
 		
 	
 		@RequestMapping(value="/test")
